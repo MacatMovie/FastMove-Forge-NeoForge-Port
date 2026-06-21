@@ -1,0 +1,40 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+issueTrackerURL="https://github.com/BeeeBea/FastMove/issues"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+description='''
+Adds animated parkour movement: dive rolls, wall runs, sliding, and prone movement.
+NeoForge 1.21.1 port based on FastMove 1.0.8, with the old pre-1.0.8 air-slide boost behavior intentionally restored.
+'''
+logoFile="assets/fastmove/icon.png"
+authors="BeeeBea, NeoForge port by Pathmakers Studio"
+displayURL="https://modrinth.com/mod/fastmove"
+
+[[dependencies.${mod_id}]]
+modId="neoforge"
+type="required"
+versionRange="${neo_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="playeranimator"
+type="required"
+versionRange="[2.0.0,)"
+ordering="AFTER"
+side="CLIENT"
+
+[[mixins]]
+config="fastmove.mixins.json"

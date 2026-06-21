@@ -1,0 +1,33 @@
+{
+  "text.config.fastmove.title" : "FastMove Config",
+  "text.config.fastmove.option.enableFastMove" : "Enable Mod",
+
+  "text.config.fastmove.section.diveRoll" : "Dive-Roll Options",
+  "text.config.fastmove.option.diveRollEnabled" : "Enabled",
+  "text.config.fastmove.option.diveRollStaminaCost" : "Stamina Cost",
+  "text.config.fastmove.option.diveRollSpeedBoostMultiplier" : "Speed Boost",
+  "text.config.fastmove.option.diveRollCoolDown" : "Cooldown (Ticks)",
+  "text.config.fastmove.option.diveRollWhenSwimming" : "Enabled While Underwater",
+  "text.config.fastmove.option.diveRollWhenFlying" : "Enabled While Using Elytra",
+
+  "text.config.fastmove.section.slide" : "Slide Options",
+  "text.config.fastmove.option.slideEnabled" : "Enabled",
+  "text.config.fastmove.option.slideStaminaCost" : "Stamina Cost",
+  "text.config.fastmove.option.slideSpeedBoostMultiplier" : "Speed Boost",
+  "text.config.fastmove.option.slideCoolDown" : "Cooldown (Ticks)",
+
+  "text.config.fastmove.section.wallRun" : "Wall-Run Options",
+  "text.config.fastmove.option.wallRunEnabled" : "Enabled",
+  "text.config.fastmove.option.wallRunStaminaCost" : "Stamina Cost",
+  "text.config.fastmove.option.wallRunSpeedBoostMultiplier" : "Speed Boost",
+  "text.config.fastmove.option.wallRunCoolDown" : "Cooldown (Ticks)",
+  "text.config.fastmove.option.wallRunDurationTicks" : "Duration (Ticks)",
+
+
+  "text.config.fastmove.section.compat" : "Mod Compatibility",
+  "text.config.fastmove.option.useCombatRoll" : "Use CombatRoll Mod Stamina",
+  "text.config.fastmove.option.useParaglider" : "Use Paraglider Mod Stamina",
+
+  "key.fastmove.up" : "FastMove Up",
+  "key.fastmove.down" : "FastMove Down"
+}
