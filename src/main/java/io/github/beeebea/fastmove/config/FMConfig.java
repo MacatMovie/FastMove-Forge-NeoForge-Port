@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.neoforged.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -34,7 +34,7 @@ public class FMConfig {
     private double slideSpeedBoostMultiplier = 1.0;
     private int slideCoolDown = 0;
 
-    // Kept for compatibility with the original config shape. The Fabric-only API hooks are disabled in this NeoForge port.
+    // Kept for compatibility with the original config shape. The Fabric-only API hooks are disabled in this Forge port.
     private boolean useCombatRoll = false;
     private boolean useParaglider = false;
 

@@ -191,8 +191,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IFastPla
         return !isSpectator() && (canElytra || !isFallFlying()) && (canSwim || !isInWater()) && !onClimbable() && !getAbilities().flying;
     }
 
-    @Inject(method = "getDefaultDimensions", at = @At("HEAD"), cancellable = true)
-    public void fastmove_getDefaultDimensions(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
+    @Inject(method = "getDimensions", at = @At("HEAD"), cancellable = true)
+    public void fastmove_getDimensions(Pose pose, CallbackInfoReturnable<EntityDimensions> cir) {
         MoveState state = fastmove_getMoveState();
         if (state != null && state != MoveState.NONE) cir.setReturnValue(state.dimensions);
     }
@@ -258,7 +258,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IFastPla
                 } else if (slideCooldown == 0 && fastmove_hasStamina(conf.slideStaminaCost(), false) && conf.slideEnabled() && fastmove_lastSprintingState
                         && fastmove_isValidForMovement(false, false)) {
                     // Intentional old FastMove 1.0.7 behavior: do NOT require onGround() here.
-                    // This keeps jump-slide-jump air boosting intact for this NeoForge port.
+                    // This keeps jump-slide-jump air boosting intact for this Forge port.
                     slideCooldown = conf.slideCoolDown();
                     fastmove_useStamina(conf.slideStaminaCost(), false);
                     moveState = MoveState.SLIDING;

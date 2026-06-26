@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import io.github.beeebea.fastmove.IFastMoveInput;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import org.lwjgl.glfw.GLFW;
 
 public class FastMoveInput implements IFastMoveInput {

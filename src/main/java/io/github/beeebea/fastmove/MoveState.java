@@ -40,7 +40,7 @@ public class MoveState {
     public MoveState(String name, boolean isSmall) {
         this.name = name;
         float height = isSmall ? 0.8F : 1.8F;
-        this.dimensions = EntityDimensions.scalable(0.6F, height).withEyeHeight(height * 0.85F);
+        this.dimensions = EntityDimensions.scalable(0.6F, height);
     }
 
     @Override

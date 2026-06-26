@@ -14,9 +14,8 @@ import io.github.beeebea.fastmove.network.MoveStatePayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.event.TickEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,12 +33,12 @@ public final class FastMoveClient {
         FastMove.INPUT = input;
 
         modEventBus.addListener(FastMoveInput::registerKeyMappings);
-        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(FastMoveClient::onClientTick);
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.addListener(FastMoveClient::onClientTick);
 
         FastMove.moveStateUpdater = new IMoveStateUpdater() {
             @Override
             public void setMoveState(Player player, MoveState moveState) {
-                PacketDistributor.sendToServer(new MoveStatePayload(player.getUUID(), MoveState.STATE(moveState)));
+                FastMove.NETWORK.sendToServer(new MoveStatePayload(player.getUUID(), MoveState.STATE(moveState)));
             }
 
             @Override
@@ -70,11 +69,12 @@ public final class FastMoveClient {
         };
     }
 
-    private static void onClientTick(ClientTickEvent.Post event) {
+    private static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
         if (FastMove.INPUT instanceof FastMoveInput input) input.onEndTick();
     }
 
-    public static void handleMoveStatePayload(final MoveStatePayload payload, final net.neoforged.neoforge.network.handling.IPayloadContext context) {
+    public static void handleMoveStatePayload(final MoveStatePayload payload) {
         Minecraft client = Minecraft.getInstance();
         if (client.level == null) return;
         MoveState moveState = MoveState.STATE(payload.moveStateInt());
@@ -87,10 +87,10 @@ public final class FastMoveClient {
         for (var entry : MoveState.STATES.values()) {
             var name = entry.name;
             if (name.equals("none")) continue;
-            var playable = PlayerAnimationRegistry.getAnimation(
-                    ResourceLocation.fromNamespaceAndPath(FastMove.MOD_ID, entry.name)
+            KeyframeAnimation animation = PlayerAnimationRegistry.getAnimation(
+                    new ResourceLocation(FastMove.MOD_ID, entry.name)
             );
-            if (playable instanceof KeyframeAnimation animation) {
+            if (animation != null) {
                 ANIMATIONS.put(entry.name, animation);
             }
         }

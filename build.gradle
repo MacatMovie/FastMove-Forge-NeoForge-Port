@@ -1,7 +1,9 @@
 plugins {
-    id 'java-library'
+    id 'eclipse'
+    id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.141'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = "v${mod_version}"
@@ -12,7 +14,7 @@ base {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
     withSourcesJar()
 }
 
@@ -22,6 +24,62 @@ sourceSets.main.resources {
     exclude 'src/generated/**/.cache'
 }
 
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+
+    runs {
+        client {
+            workingDirectory project.file('run/client')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                fastmove {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run/server')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--nogui'
+            mods {
+                fastmove {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        gameTestServer {
+            workingDirectory project.file('run/gametest')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                fastmove {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run/data')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            mods {
+                fastmove {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, "fastmove.refmap.json"
+    config "fastmove.mixins.json"
+}
 
 repositories {
     mavenCentral()
@@ -40,38 +98,18 @@ repositories {
     }
 }
 
-neoForge {
-    version = neo_version
-
-    runs {
-        client {
-            client()
-            gameDirectory = project.file('run/client')
-        }
-        server {
-            server()
-            gameDirectory = project.file('run/server')
-            programArgument '--nogui'
-        }
-    }
-
-    mods {
-        fastmove {
-            sourceSet sourceSets.main
-        }
-    }
-}
-
 dependencies {
-    implementation "dev.kosmx.player-anim:player-animation-lib-forge:${player_anim}"
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_anim}")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 tasks.withType(ProcessResources).configureEach {
     def replaceProperties = [
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
+            forge_version          : forge_version,
+            forge_version_range    : forge_version_range,
             loader_version_range   : loader_version_range,
             mod_id                 : mod_id,
             mod_name               : mod_name,
@@ -79,7 +117,7 @@ tasks.withType(ProcessResources).configureEach {
             mod_version            : mod_version,
     ]
     inputs.properties replaceProperties
-    filesMatching(['META-INF/neoforge.mods.toml']) {
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta', 'resourcepacks/*/pack.mcmeta']) {
         expand replaceProperties
     }
 }
@@ -89,15 +127,33 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 jar {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : 'BeeeBea, Pathmakers Studio',
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : 'BeeeBea, Pathmakers Studio',
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'MixinConfigs'            : 'fastmove.mixins.json'
+        ])
+    }
     from('LICENSE') {
         rename { "${it}_${archives_base_name}" }
     }
 }
 
+jar.finalizedBy('reobfJar')
+
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
+}
+
 publishing {
     publications {
         register('mavenJava', MavenPublication) {
-            from components.java
+            artifact jar
         }
     }
 }
