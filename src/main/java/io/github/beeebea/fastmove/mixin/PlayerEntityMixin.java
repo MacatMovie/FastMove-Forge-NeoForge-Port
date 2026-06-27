@@ -197,6 +197,13 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IFastPla
         if (state != null && state != MoveState.NONE) cir.setReturnValue(state.dimensions);
     }
 
+    @Inject(method = "getStandingEyeHeight", at = @At("HEAD"), cancellable = true)
+    public void fastmove_getStandingEyeHeight(Pose pose, EntityDimensions dimensions, CallbackInfoReturnable<Float> cir) {
+        if (fastmove_getMoveState() == MoveState.SLIDING) {
+            cir.setReturnValue(MoveState.SLIDING.dimensions.height * 0.85F);
+        }
+    }
+
     @Inject(method = "tick", at = @At("HEAD"))
     private void fastmove_tick(CallbackInfo info) {
         if (!FastMove.getConfig().enableFastMove()) return;
@@ -256,9 +263,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements IFastPla
                     setSprinting(true);
 
                 } else if (slideCooldown == 0 && fastmove_hasStamina(conf.slideStaminaCost(), false) && conf.slideEnabled() && fastmove_lastSprintingState
-                        && fastmove_isValidForMovement(false, false)) {
-                    // Intentional old FastMove 1.0.7 behavior: do NOT require onGround() here.
-                    // This keeps jump-slide-jump air boosting intact for this Forge port.
+                        && fastmove_isValidForMovement(false, false) && onGround()) {
                     slideCooldown = conf.slideCoolDown();
                     fastmove_useStamina(conf.slideStaminaCost(), false);
                     moveState = MoveState.SLIDING;
