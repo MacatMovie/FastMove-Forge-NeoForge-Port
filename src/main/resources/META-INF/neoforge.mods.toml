@@ -9,7 +9,7 @@ version="${mod_version}"
 displayName="${mod_name}"
 description='''
 Adds animated parkour movement: dive rolls, wall runs, sliding, and prone movement.
-NeoForge 1.21.1 port based on FastMove 1.0.8, with the old pre-1.0.8 air-slide boost behavior intentionally restored.
+NeoForge 1.21.1 port based on FastMove 1.0.8.
 '''
 logoFile="assets/fastmove/icon.png"
 authors="BeeeBea, NeoForge port by Pathmakers Studio"
