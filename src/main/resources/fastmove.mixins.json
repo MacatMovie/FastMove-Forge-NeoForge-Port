@@ -10,10 +10,11 @@
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",
-    "BipedEntityModelMixin"
+    "BipedEntityModelMixin",
+    "GameRendererMixin",
+    "CameraMixin"
   ],
-  "server": [
-  ],
+  "server": [],
   "injectors": {
     "defaultRequire": 1
   }

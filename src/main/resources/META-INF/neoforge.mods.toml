@@ -1,19 +1,19 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
-issueTrackerURL="https://github.com/BeeeBea/FastMove/issues"
+issueTrackerURL="https://github.com/MacatMovie/FastMove-Forge-NeoForge-Port/issues"
 
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 description='''
-Adds animated parkour movement: dive rolls, wall runs, sliding, and prone movement.
-NeoForge 1.21.1 port based on FastMove 1.0.8.
+Adds animated parkour movement: dive rolls, wall runs, sliding, and crawling.
+NeoForge 1.21.1 port based on FastMove 1.0.8, with additional enhancements by MacatMovie.
 '''
 logoFile="assets/fastmove/icon.png"
-authors="BeeeBea, NeoForge port by Pathmakers Studio"
-displayURL="https://modrinth.com/mod/fastmove"
+authors="BeeeBea, port by MacatMovie"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/fastmove-enhanced-parkour-movement"
 
 [[dependencies.${mod_id}]]
 modId="neoforge"

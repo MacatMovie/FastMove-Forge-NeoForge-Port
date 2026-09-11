@@ -17,4 +17,4 @@ dependencyResolutionManagement {
         maven { url = 'https://maven.kosmx.dev/' }
     }
 }
-rootProject.name = 'FastMove-NeoForge-1.21.1'
+rootProject.name = 'FastMove-Enhanced-NeoForge-1.21.1'
