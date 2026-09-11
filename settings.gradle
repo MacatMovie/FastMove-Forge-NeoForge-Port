@@ -17,4 +17,4 @@ dependencyResolutionManagement {
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
     }
 }
-rootProject.name = 'FastMove-Forge-1.20.1'
+rootProject.name = 'FastMove-Enhanced-Forge-1.20.1'

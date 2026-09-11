@@ -11,10 +11,10 @@
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",
-    "BipedEntityModelMixin"
+    "BipedEntityModelMixin",
+    "GameRendererMixin"
   ],
-  "server": [
-  ],
+  "server": [],
   "injectors": {
     "defaultRequire": 1
   }

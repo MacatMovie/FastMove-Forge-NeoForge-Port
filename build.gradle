@@ -130,11 +130,11 @@ jar {
     manifest {
         attributes([
                 'Specification-Title'     : mod_id,
-                'Specification-Vendor'    : 'BeeeBea, Pathmakers Studio',
+                'Specification-Vendor'    : 'BeeeBea, MacatMovie',
                 'Specification-Version'   : '1',
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : 'BeeeBea, Pathmakers Studio',
+                'Implementation-Vendor'   : 'BeeeBea, MacatMovie',
                 'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 'MixinConfigs'            : 'fastmove.mixins.json'
         ])
